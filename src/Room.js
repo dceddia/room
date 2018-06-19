@@ -1,18 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 class Room extends React.Component {
-  state = {
-    isLit: false
-  };
-
   toggleLight = () => {
-    this.setState(state => ({
-      isLit: !state.isLit
-    }));
+    this.props.dispatch({ type: 'TOGGLE_LIGHT' });
   };
 
   render() {
-    const brightness = this.state.isLit ? 'lit' : 'dark';
+    const brightness = this.props.isLit ? 'lit' : 'dark';
 
     return (
       <div className={`room ${brightness}`}>
@@ -23,4 +18,8 @@ class Room extends React.Component {
   }
 }
 
-export default Room;
+const mapStateToProps = state => ({
+  isLit: state.isLit
+});
+
+export default connect(mapStateToProps)(Room);
